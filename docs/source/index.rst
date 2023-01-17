@@ -1,22 +1,29 @@
-Welcome to Lumache's documentation!
-===================================
+NSL (NAIA Selection Library)
+============================
 
-**Lumache** (/lu'make/) is a Python library for cooks and food lovers
-that creates recipes mixing random ingredients.
-It pulls data from the `Open Food Facts database <https://world.openfoodfacts.org/>`_
-and offers a *simple* and *intuitive* API.
+This is the official documentation page for the **NSL** project. The project
+focuses on providing a common set of selections, based on the NAIA data format, 
+for AMS analysis that can be shared by multiple groups.
 
-Check out the :doc:`usage` section for further information, including
-how to :ref:`installation` the project.
+Docs:
+---------
 
-.. note::
+Take a look at:
 
-   This project is under active development.
+* :doc:`build-install`
+* :doc:`selections/basic-concepts`
+* :doc:`selections/predefined-selections`
+* :doc:`selections/defining-custom-selections`
+* :doc:`selections/using-hooks`
 
-Contents
---------
 
 .. toctree::
+   :maxdepth: 2
+   :hidden:
+   :caption: NSL
 
-   usage
-   api
+   /build-install
+   /selections/basic-concepts
+   /selections/predefined-selections
+   /selections/defining-custom-selections
+   /selections/using-hooks
