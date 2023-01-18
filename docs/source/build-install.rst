@@ -46,7 +46,7 @@ Follow this simple procedure:
     
    cmake ../nsl -DNSL_DOWNLOAD_NAIA=ON -DNAIA_DOWNLOAD_VERSION=1.0.1
 
-  In the last example you can omit the NAIA version, a default version () will be downloaded
+  In the last example you can omit the NAIA version, a default version (which should be fairly recent) will be downloaded
 
 
 Using the project
