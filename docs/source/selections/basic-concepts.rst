@@ -44,7 +44,10 @@ It boils down to enable something like
    NSL::Selection combined_sel = selection_1 && selection_2;
 
 which means constructing a more complex selection as a logic combination of simpler selections and still have it
-behave in the same way. Let's look at an actual example:
+behave in the same way. This, combined with a wealthy library of already defined selections, should allow to more
+easily share event selection between analysis and avoid the ever-present "reinventing the wheel" problem.
+
+Let's look at an actual example:
 
 .. code-block:: cpp
 
@@ -54,7 +57,7 @@ behave in the same way. Let's look at an actual example:
 
    auto innerTrackerSel =
        ns::InnerTracker::HitPattern() &&
-       ns::Track::ChiSquareLessThan(10.0f, NAIA::TrTrack::Side::Y, fitType, NAIA::TrTrack::Span::InnerOnly);
+       ns::Track::ChiSquareLessThan(10.0f, NAIA::TrTrack::Side::Y, NAIA::TrTrack::Fit::GBL, NAIA::TrTrack::Span::InnerOnly);
 
    for (NAIA::Event &ev : chain) {
      if (!triggerSel(event))
@@ -65,3 +68,8 @@ behave in the same way. Let's look at an actual example:
 
      // fill histos or whatever :)
    }
+
+.. note::
+
+   Uniformity and shared knowledge is generally a good thing, but comes at the expense of analysis independence.
+   This is a really important subject, but it's best discussed elsewhere :)
