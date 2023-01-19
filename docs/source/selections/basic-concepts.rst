@@ -37,7 +37,7 @@ This is the reason why another main point of this library is allowing to define 
 of time **before** the event loop, so that in the event loop you can focus on what you actually do with the events
 you select, rather than how you select them.
 
-It boils down to enable something like
+It boils down to enabling something like
 
 .. code-block:: cpp
 
@@ -73,3 +73,7 @@ Let's look at an actual example:
 
    Uniformity and shared knowledge is generally a good thing, but comes at the expense of analysis independence.
    This is a really important subject, but it's best discussed elsewhere :)
+
+As shown in the previous example the most common selections types used in almost every analysis are already implemented and can be parametrized in order
+to maintain flexibility. The existing selections should allow to express at least 90% of all "classic" analyses while the remaining 10% can be covered
+defining custom selections. However this is a more advanced topic which is covered later on in this guide. 
