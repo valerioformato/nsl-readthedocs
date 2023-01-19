@@ -121,5 +121,5 @@ as well as the Tracker side to consider.
 
 This selection checks if the Inner Tracker track has at least a minimum number of clusters with a good status on a given side. You can specify the 
 lower limit of hits, as well as the mask to compare the hit status against (see 
-`here <https://ams.cern.ch/AMS/Analysis/hpl3itp1/root02_v5/html/development/html/classTrClusterR.html#a24ef522472bd83d45174daee1f1853a9>` for 
+`here <https://ams.cern.ch/AMS/Analysis/hpl3itp1/root02_v5/html/development/html/classTrClusterR.html#a24ef522472bd83d45174daee1f1853a9>`_ for 
 details on the charge status word).   
