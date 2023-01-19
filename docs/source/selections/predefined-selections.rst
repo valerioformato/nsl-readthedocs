@@ -107,8 +107,7 @@ the ``ChargeRecoType`` to check.
 *HitPattern*
 ^^^^^^^^^^^^
 
-This selection checks if the Inner Tracker charge is within a specified range. You can specify the charge range, as well as the 
-``ChargeRecoType`` to check. 
+This selection checks if the Inner Tracker hits satisfy the canonical ``L2 && (L3 || L4) && (L5 || L6) && (L7 || L8)`` pattern. 
 
 *NHitsGreaterThan*
 ^^^^^^^^^^^^^^^^^^
