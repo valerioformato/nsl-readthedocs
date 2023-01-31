@@ -69,7 +69,7 @@ check only Upper Tof layers the corresponding value is ``0b0011``, while for Low
 InnerTracker
 ------------
 
-.. list-table:: Tracker selections
+.. list-table:: Inner Tracker selections
    :widths: 25 50 25
    :header-rows: 1
 
@@ -121,4 +121,114 @@ as well as the Tracker side to consider.
 This selection checks if the Inner Tracker track has at least a minimum number of clusters with a good status on a given side. You can specify the 
 lower limit of hits, as well as the mask to compare the hit status against (see 
 `here <https://ams.cern.ch/AMS/Analysis/hpl3itp1/root02_v5/html/development/html/classTrClusterR.html#a24ef522472bd83d45174daee1f1853a9>`_ for 
-details on the charge status word).   
+details on the charge status word).
+
+
+Full Track
+----------
+
+.. list-table:: Track-related selections
+   :widths: 25 50 25
+   :header-rows: 1
+
+   * - Name
+     - Description
+     - Parameters
+   * - ChiSquareLessThan
+     - Check if the Track chi-square is less than a specified threshold, for a given side, fit and span.
+     - Upper bound, tracked side, track fit algorithm, track span.
+   * - InnerFiducialVolume
+     - Check if the Track lies within a pre-defined fiducial volume defined on the individual tracker planes of the Inner Tracker.
+     - Track fit algorithm, track span.
+   * - L1FiducialVolume
+     - Check if the Track lies within a pre-defined fiducial volume defined on the L1 tracker plane.
+     - Track fit algorithm, track span.
+   * - L9FiducialVolume
+     - Check if the Track lies within a pre-defined fiducial volume defined on the L9 tracker plane.
+     - Track fit algorithm, track span.
+   * - HitCut
+     - Check if the Track has a hit on a given tracker layer.
+     - Layer J-number (1...9).
+   * - L1NormResidualLessThan
+     - Check if the normalized residual on L1 is below a specified threshold, for a given fit.
+     - Upper bound, track fit algorithm.
+
+
+*ChiSquareLessThan*
+^^^^^^^^^^^^^^^^^^^
+
+This selection checks if the track has chi-square per degree of freedom less than a specified threshold, on a given side. 
+You need to specify a track fit algorithm and a track span.
+
+*InnerFiducialVolume*
+^^^^^^^^^^^^^^^^^^^^^
+
+This selection checks if the track lies inside a pre-defined fiducial volume within the Inner Tracker. This fiducial volume is defined 
+removing the most external part of the inner tracker layers. You need to specify a track fit algorithm and a track span.
+
+.. list-table:: Fiducial volume definition
+  :widths: 20 40 40
+  :header-rows: 1
+
+  * - Layer
+    - R boundary
+    - Y boundary
+  * - L2
+    - 62 cm
+    - 40 cm
+  * - L3 / L4
+    - 46 cm
+    - 44 cm
+  * - L5 / L6
+    - 62 cm
+    - 36 cm
+  * - L7 / L8
+    - 46 cm
+    - 44 cm
+
+*L1FiducialVolume*
+^^^^^^^^^^^^^^^^^^
+
+This selection checks if the track lies inside a pre-defined fiducial volume within the L1 plane. This fiducial volume is defined 
+removing the most external part of the L1 plane. You need to specify a track fit algorithm and a track span.
+
+.. list-table:: Fiducial volume definition
+  :widths: 20 40 40
+  :header-rows: 1
+
+  * - Layer
+    - R boundary
+    - Y boundary
+  * - L1
+    - 62 cm
+    - 47 cm
+  
+*L9FiducialVolume*
+^^^^^^^^^^^^^^^^^^
+
+This selection checks if the track lies inside a pre-defined fiducial volume within the L9 plane. This fiducial volume is defined 
+removing the most external part of the L1 plane. You need to specify a track fit algorithm and a track span.
+
+.. list-table:: Fiducial volume definition
+  :widths: 20 40 40
+  :header-rows: 1
+
+  * - Layer
+    - R boundary
+    - Y boundary
+  * - L9
+    - 43 cm
+    - 29 cm
+
+*HitCut*
+^^^^^^^^
+
+This selection checks if the Track has a hit on a given tracker layer (effectively equivalent to check ``TrTrackR::GetHitLJ`` 
+`in gbatch <https://ams.cern.ch/AMS/Analysis/hpl3itp1/root02_v5/html/development/html/classTrTrackR.html#a82eeb22a1bb99dae96e4f364eb43d404>`_).
+
+*L1NormResidualLessThan*
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Check if the normalized residual on L1, defined as
+:math:`\chi^2_\text{IL1} \cdot \text{NDoF}_\text{IL1} - \chi^2_\text{Inner} \cdot \text{NDoF}_\text{Inner}`
+, is below a specified threshold, for a given fit.
