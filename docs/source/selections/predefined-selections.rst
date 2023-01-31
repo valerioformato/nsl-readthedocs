@@ -232,3 +232,44 @@ This selection checks if the Track has a hit on a given tracker layer (effective
 Check if the normalized residual on L1, defined as
 :math:`\chi^2_\text{IL1} \cdot \text{NDoF}_\text{IL1} - \chi^2_\text{Inner} \cdot \text{NDoF}_\text{Inner}`
 , is below a specified threshold, for a given fit.
+
+
+Tracker Layer Charges
+---------------------
+
+.. list-table:: Layer Charge-related selections
+   :widths: 25 50 25
+   :header-rows: 1
+
+   * - Name
+     - Description
+     - Parameters
+   * - LayerChargeInRange
+     - Check if the Tracker charge (combination of X and Y measurements) of a particular layer is in a given range
+     - Layer J-number (1...9), Range lower bound, Range upper bound, Charge measurement type
+   * - LayerChargeStatus
+     - Check if the Track cluster on a particular layer has a good status (checked using the default ``0x10013D`` mask)
+     - Layer J-number (1...9)
+   * - LayerChargeAsymmetry
+     - Check if the relative difference between Tracker charge on X and Y views for a particular layer is below a specified threshold
+     - Layer J-number (1...9), Upper bound, Charge measurement type
+
+*LayerChargeInRange*
+^^^^^^^^^^^^^^^^^^^^
+
+This selection checks if the Tracker charge of a particular layer is in a given range. 
+This check is based on the combined charge estimation from both X and Y sides. 
+You can specify the charge range, as well as the ``ChargeRecoType`` to check. 
+
+*LayerChargeInRange*
+^^^^^^^^^^^^^^^^^^^^
+
+This selection checks if the Tracker charge of a particular layer has a good status word.
+(see `here <https://ams.cern.ch/AMS/Analysis/hpl3itp1/root02_v5/html/development/html/classTrClusterR.html#a24ef522472bd83d45174daee1f1853a9>`_ for 
+details on the charge status word).
+
+*LayerChargeAsymmetry*
+^^^^^^^^^^^^^^^^^^^^^^
+
+This selection checks if the Tracker charge asymmetry for a particular layer is below a specified threshold.
+The asymmetry is defined as ::math:`(Q_X - Q_Y) / (Q_X + Q_Y)`. 
