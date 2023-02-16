@@ -27,21 +27,22 @@ A ``matcher`` is the real unit that checks properties of an event and decides we
 There are several different ``matcher`` types, but if you are writing a custom selection you will only be interested to the ``boolMatcher``, which is the object you will be using to initialize the private ``m_matcher`` member of your ``NSL::Selection`` derived class. Let's look at an example from the predefined selections and walk through it:
 
 .. code-block:: cpp
-    // NSL namespaces removed for the sake of clarity
 
-    // BetaInRange.h
-    class BetaInRange : public Selection {
-    public:
-      BetaInRange(float min, float max, NAIA::Tof::BetaType type);
-    };
+   // NSL namespaces removed for the sake of clarity
 
-    // BetaInRange.cpp
-    BetaInRange::BetaInRange(float min, float max, NAIA::Tof::BetaType type) {
-      m_matcher = std::make_shared<boolMatcher>([=](Event &event) {
-        auto charge = event.tofBase->Beta[type];
-        return (charge > min && charge < max);
-      });
-    }
+   // BetaInRange.h
+   class BetaInRange : public Selection {
+   public:
+     BetaInRange(float min, float max, NAIA::Tof::BetaType type);
+   };
+
+   // BetaInRange.cpp
+   BetaInRange::BetaInRange(float min, float max, NAIA::Tof::BetaType type) {
+     m_matcher = std::make_shared<boolMatcher>([=](Event &event) {
+       auto charge = event.tofBase->Beta[type];
+       return (charge > min && charge < max);
+     });
+   }
 
 * In our header we define a new class for our selection, and we derive it from ``NSL::Selection``
 * We define a constructor where we take in all the necessary parameters we might need
