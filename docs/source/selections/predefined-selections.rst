@@ -6,6 +6,9 @@ The following selections are available in this library, divided in separate name
 Trigger
 -------
 
+.. hint::
+   *Under namespace* NSL::Selections::Trigger
+
 .. list-table:: Trigger selections
    :widths: 25 50 25
    :header-rows: 1
@@ -25,6 +28,9 @@ This selection simply returns the value of ``NAIA::EventSummary::IsPhysicsTrigge
 
 Tof
 ---
+
+.. hint::
+   *Under namespace* NSL::Selections::Tof
 
 .. list-table:: Tof selections
    :widths: 25 50 25
@@ -68,6 +74,9 @@ check only Upper Tof layers the corresponding value is ``0b0011``, while for Low
 
 InnerTracker
 ------------
+
+.. hint:: 
+  *Under namespace* NSL::Selections::InnerTracker
 
 .. list-table:: Inner Tracker selections
    :widths: 25 50 25
@@ -126,6 +135,9 @@ details on the charge status word).
 
 Full Track
 ----------
+
+.. hint::
+   *Under namespace* NSL::Selections::Track
 
 .. list-table:: Track-related selections
    :widths: 25 50 25
@@ -237,6 +249,9 @@ Check if the normalized residual on L1, defined as
 Tracker Layer Charges
 ---------------------
 
+.. hint::
+   *Under namespace* NSL::Selections::TrackerLayer
+
 .. list-table:: Layer Charge-related selections
    :widths: 25 50 25
    :header-rows: 1
@@ -244,13 +259,13 @@ Tracker Layer Charges
    * - Name
      - Description
      - Parameters
-   * - LayerChargeInRange
+   * - ChargeInRange
      - Check if the Tracker charge (combination of X and Y measurements) of a particular layer is in a given range
      - Layer J-number (1...9), Range lower bound, Range upper bound, Charge measurement type
-   * - LayerChargeStatus
+   * - ChargeStatus
      - Check if the Track cluster on a particular layer has a good status (checked using the default ``0x10013D`` mask)
      - Layer J-number (1...9)
-   * - LayerChargeAsymmetry
+   * - ChargeAsymmetry
      - Check if the relative difference between Tracker charge on X and Y views for a particular layer is below a specified threshold
      - Layer J-number (1...9), Upper bound, Charge measurement type
 
