@@ -288,3 +288,14 @@ details on the charge status word).
 
 This selection checks if the Tracker charge asymmetry for a particular layer is below a specified threshold.
 The asymmetry is defined as ::math:`(Q_X - Q_Y) / (Q_X + Q_Y)`. 
+
+
+Common Selections
+=================
+
+There is a set of selections recommended by the MIT group for nuclei analysis, and they are commonly referred to as "common selections".
+These selections are a special case of the predefined selections listed above in this page, but where the selection parameters are tuned
+with respect to the particle charge under exam.
+
+These specialized versions of predefined selections can be found under the ``NSL::Selections::Common`` namespace, with the same exact
+class name as their base version.
