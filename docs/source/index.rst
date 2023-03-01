@@ -16,6 +16,7 @@ Take a look at:
 * :doc:`selections/defining-custom-selections`
 * :doc:`selections/using-hooks`
 
+and to the `Doxygen documentation <https://nsl-docs.web.cern.ch/v1.0.0/namespaces.html>`_
 
 .. toctree::
    :maxdepth: 2
