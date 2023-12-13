@@ -57,7 +57,7 @@ To use the NAIA ntuples your project needs:
 * the headers in ``nsl.install/include``
 * the ``nsl.install/lib/libNSLSelections.so`` library
 
-Similarly to what NAIA does, NSL exports the ``NSL::Selections`` CMake target which is the main one to link against.
+Similarly to what NAIA does, NSL exports the ``NSL::NSLSelections`` CMake target which is the main one to link against.
 
 .. code-block:: cmake
 
@@ -66,7 +66,7 @@ Similarly to what NAIA does, NSL exports the ``NSL::Selections`` CMake target wh
   set(SOURCES MyProgram.cpp)
 
   add_executable(MyProgram ${SOURCES})
-  target_link_libraries(MyProgram NAIA::NAIAChain NSL::Selections)
+  target_link_libraries(MyProgram NAIA::NAIAChain NSL::NSLSelections)
 
 .. note::
 
