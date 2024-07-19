@@ -6,8 +6,8 @@ project = "NSL"
 copyright = ""
 author = "Valerio Formato"
 
-release = "0.1"
-version = "0.1.0"
+release = "1.1"
+version = "1.1.0"
 
 # -- General configuration
 
@@ -17,6 +17,7 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "sphinx.ext.intersphinx",
+    "myst_parser",
 ]
 
 intersphinx_mapping = {
@@ -33,8 +34,3 @@ html_theme = "furo"
 
 # -- Options for EPUB output
 epub_show_urls = "footnote"
-
-# Add any paths that contain custom static files (such as style sheets) here,
-# relative to this directory. They are copied after the builtin static files,
-# so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ["_static"]
