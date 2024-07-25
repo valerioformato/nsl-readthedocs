@@ -18,11 +18,13 @@ This selection simply returns the value of `NAIA::EventSummary::IsPhysicsTrigger
 
 *Under namespace* `NSL::Selections::Tof`
 
-| Name           | Description                                           | Parameters                                  |
-|----------------|-------------------------------------------------------|---------------------------------------------|
-| BetaInRange    | Check if the Tof beta measurement is in a given range | Range lower bound, Range upper bound, Beta measurement type |
-| ChargeInRange  | Check if the Tof charge measurement is in a given range | Range lower bound, Range upper bound, Charge measurement type |
-| GoodPathlength | Check if a given combination of Tof layers have a well defined track pathlength | A 4-bit bitset encoding the layer pattern to be checked |
+| Name             | Description                                           | Parameters                                  |
+|------------------|-------------------------------------------------------|---------------------------------------------|
+| BetaInRange      | Check if the Tof beta measurement is in a given range | Range lower bound, Range upper bound, Beta measurement type |
+| ChargeInRange    | Check if the Tof charge measurement is in a given range | Range lower bound, Range upper bound, Charge measurement type |
+| GoodPathlength   | Check if a given combination of Tof layers have a well defined track pathlength | A 4-bit bitset encoding the layer pattern to be checked |
+| Chi2CooLessThan  | Check if the spatial chi-square of the ToF clusters is less than given value | Upper bound |
+| Chi2TimeLessThan | Check if the temporal chi-square of the ToF clusters is less than given value | Upper bound |
 
 ### BetaInRange
 
@@ -40,6 +42,46 @@ passing a 4-bit bitset when creating the selection.
 
 The 4 bits are associated with Tof layers in order from least significant to most significant (or right-to-left, if you will), meaning that if you want to 
 check only Upper Tof layers the corresponding value is `0b0011`, while for Lower Tof is `0b1100` (and `0b1111` for all 4 layers).
+
+### Chi2CooLessThan
+
+This selection checks if the normalized chi-square of the Tof clusters spatial reconstruction is less than given value. You can specify the upper bound.
+
+### Chi2TimeLessThan
+
+This selection checks if the normalized chi-square of the Tof clusters temporal reconstruction is less than given value. You can specify the upper bound.
+
+## Tof Standalone
+
+*Under namespace* `NSL::Selections::TofSt`
+
+| Name             | Description                                           | Parameters                                  |
+|------------------|-------------------------------------------------------|---------------------------------------------|
+| BetaInRange      | Check if the Tof beta measurement is in a given range | Range lower bound, Range upper bound, Beta measurement type |
+| ChargeInRange    | Check if the Tof charge measurement is in a given range | Range lower bound, Range upper bound, Charge measurement type |
+| GoodPathlength   | Check if a given combination of Tof layers have a well defined track pathlength | A 4-bit bitset encoding the layer pattern to be checked |
+| Chi2CooLessThan  | Check if the spatial chi-square of the ToF clusters is less than given value | Upper bound |
+| Chi2TimeLessThan | Check if the temporal chi-square of the ToF clusters is less than given value | Upper bound |
+| InnerFiducialVolume | Check if the Tof track lies within a pre-defined fiducial volume defined on the individual tracker planes of the Inner Tracker | None |
+| L1FiducialVolume    | Check if the Tof track lies within a pre-defined fiducial volume defined on the L1 tracker plane. | None |
+| L9FiducialVolume    | Check if the Tof track lies within a pre-defined fiducial volume defined on the L9 tracker plane. | None |
+
+The `standalone` selections for Tof are constructed from the particle 0 Tof objects, but this reconstruction avoids using any information from the Tracker track. Meant to be used for the Track reconstruction efficiency evaluation.
+The first five cuts coincide with the non standalone version, whose description is given in the `Tof` section.
+The fiducial volume cuts are meant to ensure that the event lies within the tracker volume, using only the linear track given by Tof clusters. See the namesake selections in `Full Track` section for their description.
+
+## Trd Standalone
+
+*Under namespace* `NSL::Selections::TrdSt`
+
+| Name                | Description                                           | Parameters                                  |
+|---------------------|-------------------------------------------------------|---------------------------------------------|
+| InnerFiducialVolume | Check if the Trd track lies within a pre-defined fiducial volume defined on the individual tracker planes of the Inner Tracker | None |
+| L1FiducialVolume    | Check if the Trd track lies within a pre-defined fiducial volume defined on the L1 tracker plane. | None |
+| L9FiducialVolume    | Check if the Trd track lies within a pre-defined fiducial volume defined on the L9 tracker plane. | None |
+
+The `standalone` selections for Trd are constructed using the Tof extrapolation to select TRD hits, without using any information from the Tracker track. Meant to be used for the Track reconstruction efficiency evaluation.
+The fiducial volume cuts are meant to ensure that the event lies within the tracker volume, using only the linear track given by Trd hits. See the namesake selections in `Full Track` section for their description.
 
 ## InnerTracker
 
@@ -69,7 +111,7 @@ This selection checks if the Inner Tracker hits satisfy the canonical `L2 && (L3
 
 This selection checks if the Inner Tracker track has at least a minimum number of hits on a given side. You can specify the lower limit of hits, as well as the Tracker side to consider.
 
-## NGoodClustersGreaterThan
+### NGoodClustersGreaterThan
 
 This selection checks if the Inner Tracker track has at least a minimum number of clusters with a good status on a given side. You can specify the lower limit of hits, as well as the mask to compare the hit status against (see [here](https://ams.cern.ch/AMS/Analysis/hpl3itp1/root02_v5/html/development/html/classTrClusterR.html#a24ef522472bd83d45174daee1f1853a9) for details on the charge status word).
 
@@ -134,6 +176,9 @@ This selection checks if the Track has a hit on a given tracker layer (effective
 
 Check if the normalized residual on L1, defined as `\(\chi^2_{IL1} \cdot NDoF_{IL1} - \chi^2_{Inner} \cdot NDoF_{Inner}\)`, is below a specified threshold, for a given fit.
 
+### L1NormResidualLessThan
+
+Check if the normalized residual on L1, defined as `\(\chi^2_{IL1} \cdot NDoF_{IL1} - \chi^2_{Inner} \cdot NDoF_{Inner}\)`, is below a specified threshold, for a given fit.
 
 ## Tracker Layer Charges
 
@@ -156,6 +201,42 @@ This selection checks if the Tracker charge of a particular layer has a good sta
 ### LayerChargeAsymmetry
 
 This selection checks if the Tracker charge asymmetry for a particular layer is below a specified threshold. The asymmetry is defined as \((Q_X - Q_Y) / (Q_X + Q_Y)\).
+
+## Unbiased Layer Charges
+
+*Under namespace* `NSL::Selections::UnbExtLayer`
+
+| Name                      | Description                                                                 | Parameters                                  |
+|---------------------------|-----------------------------------------------------------------------------|---------------------------------------------|
+| UnbExtLayerChargeInRange  | Check if the unbiased charge of external layers (L1 and L9) is within a given range | Layer J-number (1...9), Range lower bound, Range upper bound |
+
+### UnbExtLayerChargeInRange
+
+This selection checks if the unbiased charge of external layers (L1 and L9) is within a given range. It is meant to constrain the denominator selection for the Layer 1 efficiency.
+
+## Event Summary
+
+*Under namespace* `NSL::Selections::EvSummary`
+
+| Name                | Description                                                       | Parameters  |
+|---------------------|-------------------------------------------------------------------|-------------|
+| NAccLessThan        | Check if number of fired Acc clusters are less than given value   | Upper bound |
+| NTofClusterLessThan | Check if number of hit Tof clusters are less than given value     | Upper bound |
+| NTrTrackLessThan    | Check if number of reconstructed tracks are less than given value | Upper bound |
+
+These selections use the `Event Summary` informations to require a stricter sample for efficiencies calculation. They are meant to correct the time dependence of Layer 1 efficiency, ensuring a clean selection of events for its denominator.
+
+### NAccLessThan
+
+This selection checks if the number of fired Acc clusters is less than a given value. You can specify the upper bound.
+
+### NTofClusterLessThan
+
+This selection checks if the number of hit Tof clusters is less than a given value. You can specify the upper bound.
+
+### NAccLessThan
+
+This selection checks if the number of reconstructed tracks is less than a given value. You can specify the upper bound.
 
 # Common Selections
 
