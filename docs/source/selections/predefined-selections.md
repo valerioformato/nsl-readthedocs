@@ -59,15 +59,15 @@ This selection checks if the normalized chi-square of the Tof clusters temporal 
 |------------------|-------------------------------------------------------|---------------------------------------------|
 | BetaInRange      | Check if the Tof beta measurement is in a given range | Range lower bound, Range upper bound, Beta measurement type |
 | ChargeInRange    | Check if the Tof charge measurement is in a given range | Range lower bound, Range upper bound, Charge measurement type |
-| GoodPathlength   | Check if a given combination of Tof layers have a well defined track pathlength | A 4-bit bitset encoding the layer pattern to be checked |
 | Chi2CooLessThan  | Check if the spatial chi-square of the ToF clusters is less than given value | Upper bound |
 | Chi2TimeLessThan | Check if the temporal chi-square of the ToF clusters is less than given value | Upper bound |
 | InnerFiducialVolume | Check if the Tof track lies within a pre-defined fiducial volume defined on the individual tracker planes of the Inner Tracker | None |
 | L1FiducialVolume    | Check if the Tof track lies within a pre-defined fiducial volume defined on the L1 tracker plane. | None |
 | L9FiducialVolume    | Check if the Tof track lies within a pre-defined fiducial volume defined on the L9 tracker plane. | None |
 
-The `standalone` selections for Tof are constructed from the particle 0 Tof objects, but this reconstruction avoids using any information from the Tracker track. Meant to be used for the Track reconstruction efficiency evaluation.
-The first five cuts coincide with the non standalone version, whose description is given in the `Tof` section.
+The `standalone` selections for Tof are constructed from the particle 0 Tof objects, but this reconstruction avoids using any information from the Tracker track. It's meant to be used for the Track reconstruction efficiency evaluation.
+The first four cuts coincide with the non standalone version, whose description is given in the `Tof` section.
+Note that the `ChargeInRange` cut uses `NAIA::TofBaseData::ChargeNoPL`, instead of `NAIA::TofBaseData::Charge`, due to an unresolved bug with the latter in the current version of NAIA (1.2).
 The fiducial volume cuts are meant to ensure that the event lies within the tracker volume, using only the linear track given by Tof clusters. See the namesake selections in `Full Track` section for their description.
 
 ## Trd Standalone
@@ -202,17 +202,22 @@ This selection checks if the Tracker charge of a particular layer has a good sta
 
 This selection checks if the Tracker charge asymmetry for a particular layer is below a specified threshold. The asymmetry is defined as \((Q_X - Q_Y) / (Q_X + Q_Y)\).
 
-## Unbiased Layer Charges
+## Unbiased External Layer
 
 *Under namespace* `NSL::Selections::UnbExtLayer`
 
 | Name                      | Description                                                                 | Parameters                                  |
 |---------------------------|-----------------------------------------------------------------------------|---------------------------------------------|
-| UnbExtLayerChargeInRange  | Check if the unbiased charge of external layers (L1 and L9) is within a given range | Layer J-number (1...9), Range lower bound, Range upper bound |
+| UnbExtLayerHitCut  | Checks if there is a hit on either L1 or L9 | Layer J-number (1 or 9) |
+| UnbExtLayerChargeInRange  | Checks if the unbiased charge of external layers (L1 and L9) is within a given range | Layer J-number (1 or 9), Range lower bound, Range upper bound |
+
+### UnbExtLayerHitCut
+
+This selection checks the presence of a hit on external layers (L1 or L9). It is meant to constrain the denominator selection for the Inner Tracker efficiency.
 
 ### UnbExtLayerChargeInRange
 
-This selection checks if the unbiased charge of external layers (L1 and L9) is within a given range. It is meant to constrain the denominator selection for the Layer 1 efficiency.
+This selection checks if the unbiased charge of external layers (L1 or L9) is within a given range. It is meant to constrain the denominator selection for the Inner Tracker efficiency.
 
 ## Event Summary
 
@@ -238,8 +243,41 @@ This selection checks if the number of hit Tof clusters is less than a given val
 
 This selection checks if the number of reconstructed tracks is less than a given value. You can specify the upper bound.
 
+## RTI
+
+*Under namespace* `NSL::Selections`
+
+| Name              | Description                                      | Parameters |
+|-------------------|--------------------------------------------------|------------|
+| DefaultRTISelection | Default RTI selection as in Pass8 Twiki | NAIA::RTIInfo object, is_photon_polarization_run boolean |
+| PG_ProtonRTISelection | PG Proton Analysis RTI selection | NAIA::RTIInfo object, UTC time in seconds |
+
+### DefaultRTISelection
+
+Standard collection of cuts on RTI, used in many analyses. It's derived from the AMS Pass8 Twiki.
+
+### PG_ProtonRTISelection
+
+This selection is used in the PG Proton Analysis to increase statistics at low rigidity (mainly for SEP events).
+
+## Auxiliary Cuts
+
+*Under namespace* `NSL::Selections::Aux`
+
+| Name              | Description                                      | Parameters |
+|-------------------|--------------------------------------------------|------------|
+| MassCutProton | Cuts charge 1 light particles (pions and kaons) based on 1/Beta | track fit algorithm, track span, Beta measurement type|
+
+### MassCutProton
+
+This selection is derived from the AMS Twiki and is used to clean the proton sample from light particles produced by interactions (pions and kaons). It can be applied on both ISS data and Monte Carlo to clean the selected sample and the denominator of the L1 efficiency.
+
 # Common Selections
 
 There is a set of selections recommended by the MIT group for nuclei analysis, and they are commonly referred to as "common selections". These selections are a special case of the predefined selections listed above in this page, but where the selection parameters are tuned with respect to the particle charge under exam.
 
 These specialized versions of predefined selections can be found under the `NSL::Selections::Common` namespace, with the same exact class name as their base version.
+
+# PG-ProtonAnalysisSelection
+
+The global header `NSL/PG-ProtonAnalysisSelection.h` includes the current proton selection used in Perugia for the Daily and SEP analyses, using NSL cuts. It contains the primary selection for counts (`selection`) and all the numerators and denominators of efficiencies (`den_l1` and `num_l1` for Layer 1 eff, `den_tf` and `num_tf` for the ToF eff...).
